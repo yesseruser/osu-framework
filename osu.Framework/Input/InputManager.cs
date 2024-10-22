@@ -882,7 +882,11 @@ namespace osu.Framework.Input
         }
 
         protected virtual void HandleTabletPenButtonStateChange(ButtonStateChangeEvent<TabletPenButton> tabletPenButtonStateChange)
-            => GetButtonEventManagerFor(tabletPenButtonStateChange.Button).HandleButtonStateChange(tabletPenButtonStateChange.State, tabletPenButtonStateChange.Kind);
+        {
+            if (tabletPenButtonStateChange.Kind == ButtonStateChangeKind.Pressed)
+                Host.Window.Raise();
+            GetButtonEventManagerFor(tabletPenButtonStateChange.Button).HandleButtonStateChange(tabletPenButtonStateChange.State, tabletPenButtonStateChange.Kind);
+        }
 
         protected virtual void HandleTabletAuxiliaryButtonStateChange(ButtonStateChangeEvent<TabletAuxiliaryButton> tabletAuxiliaryButtonStateChange)
             => GetButtonEventManagerFor(tabletAuxiliaryButtonStateChange.Button).HandleButtonStateChange(tabletAuxiliaryButtonStateChange.State, tabletAuxiliaryButtonStateChange.Kind);
